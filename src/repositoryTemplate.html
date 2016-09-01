@@ -1,0 +1,26 @@
+<script id="repositories" type="text/html">
+    {{#repository}}
+        <div class="row">
+
+            <div class="col-md-2">
+                <img class="img-responsive img-circle" src="{{ links.avatar.href }}" height="80", width="100">
+            </div>
+
+            <div class="col-md-8">
+                <h3> {{ name }} </h3>
+                <p>Created on : {{created_on}} </p>
+                <p>Last update on: {{updated_on}}</p>
+                {{language}}
+            </div>
+
+            <div class="col-md-2">
+                <a href="{{ links.html.href }}" class="btn btn-primary" target="_blank">
+                    View on bitbucket
+                </a>
+            </div>
+
+        </div>
+        <hr>
+    {{/repository}}
+</script>
+
