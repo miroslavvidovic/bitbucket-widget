@@ -25,6 +25,7 @@
     "bootstrap": "^3.3.7",
     "mustache.js": "mustache#^2.2.1",
     "restful.js": "^0.9.6",
-    "fetch": "^1.0.0"
+    "fetch": "^1.0.0",
+    "moment": "^2.16.0"
   }
 }
