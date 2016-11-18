@@ -1,26 +1,27 @@
 <script id="repositories" type="text/html">
     {{#repository}}
-        <div class="row">
-
-            <div class="col-md-2">
-                <img class="img-responsive img-circle" src="{{ links.avatar.href }}" height="80", width="100">
-            </div>
-
-            <div class="col-md-8">
-                <h3> {{ name }} </h3>
-                <p>Created on : {{created_on}} </p>
-                <p>Last update on: {{updated_on}}</p>
-                {{language}}
-            </div>
-
-            <div class="col-md-2">
-                <a href="{{ links.html.href }}" class="btn btn-primary" target="_blank">
-                    View on bitbucket
-                </a>
-            </div>
-
+    <section>
+        <div class="sectionTitle">
+            <img class="img-repository quickFade delayThree" src="{{ links.avatar.href }}" />
+            <h1 class="quickFade delayThree">
+                <a href="{{ links.html.href }}" target="_blank">{{ name }}</a>
+            </h1>
         </div>
-        <hr>
+
+        <div class="sectionContent">
+            <article>
+                <h2 class="quickFade delayFour">{{ name }}</h2>
+                <p class="quickFade delayFour subDetails"> Created: {{ created }}</p>
+                <p class="quickFade delayFour subDetails"> Updated: {{ updated }}</p>
+                <p class="quickFade delayFour subDetails"> Issues: {{ has_issues }}</p>
+                <p class="quickFade delayFour subDetails"> Wiki: {{ has_wiki }}</p>
+                <p class="quickFade delayFour subDetails"> Language : {{ language }}</p>
+                <p class="quickFade delayFour subDetails"> Size: {{ size }}b</p>
+
+                <p class="quickFade delayFour"> {{ description }}</p>
+            </article>
+        </div>
+        <div class="clear"></div>
+    </section>
     {{/repository}}
 </script>
-
