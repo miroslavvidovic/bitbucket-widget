@@ -64,6 +64,11 @@ function returnData(data){
     return JsonData;
 }
 
+function formatDate(date){
+    var newDate = moment(date).format('DD.MM.YYYY.');
+    return newDate;
+}
+
 // User username
 var username = 'vidovicmiroslav';
 
@@ -89,12 +94,14 @@ function loadData() {
 
         getUser(username, function(response){
             var data = {
-             username: username,
+             username : username,
              avatar : avatar,
-             created_on : response.created_on,
+             created_on : formatDate(response.created_on),
+             display_name : response.display_name,
+             link : response.links.html.href,
             };
 
-            console.log(response);
+            // console.log(response);
             var rendered = Mustache.render(template, data);
             $('#targetUser').html(rendered);
 
@@ -109,7 +116,14 @@ function loadData() {
         getRepositories(username, function(response) {
             var data = {
                 repository : response.values,
+                "created": function(){
+                    return formatDate(this.created_on);
+                },
+                "updated": function(){
+                    return formatDate(this.updated_on);
+                }
             };
+            console.log(response.values[0]);
 
             var rendered = Mustache.render(template, data);
             $('#targetRepositories').html(rendered);
