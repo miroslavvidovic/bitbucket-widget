@@ -1,21 +1,21 @@
-/** Get the Bitbucket user data
- * @param {string} username - Bitbucket user username
+/** Returns the Bitbucket user information.
+ * @param {string} username - The Bitbucket username.
  */
 function getUser(username, callback){
     var xhttpRequest;
-    var bitbucketApi = 'https://api.bitbucket.org/2.0/users/' + username;
+    var bitbucketApi = "https://api.bitbucket.org/2.0/users/" + username;
+
     if (window.XMLHttpRequest) {
         xhttpRequest = new XMLHttpRequest();
-        } else {
+    } else {
         // code for IE6, IE5
         xhttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
     }
 
-    xhttpRequest.open('GET', bitbucketApi, true);
-
-    xhttpRequest.responseType = 'text';
-
+    xhttpRequest.open("GET", bitbucketApi, true);
+    xhttpRequest.responseType = "text";
     var response;
+
     xhttpRequest.onload = function () {
         if (xhttpRequest.readyState === xhttpRequest.DONE) {
             if (xhttpRequest.status === 200) {
@@ -28,24 +28,23 @@ function getUser(username, callback){
     xhttpRequest.send(null);
 }
 
-/** Get the information about user repostiories
- * @param {string} username - Bitbucket user username
+/** Returns info for repositories owned by the user.
+ * @param {string} username - The Bitbucket username.
  */
 function getRepositories(username, callback){
     var xhttpRequest;
-    var bitbucketApi = 'https://api.bitbucket.org/2.0/repositories/' + username;
+    var bitbucketApi = "https://api.bitbucket.org/2.0/repositories/" + username;
     if (window.XMLHttpRequest) {
         xhttpRequest = new XMLHttpRequest();
-        } else {
+    } else {
         // code for IE6, IE5
         xhttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
     }
 
-    xhttpRequest.open('GET', bitbucketApi, true);
-
-    xhttpRequest.responseType = 'text';
-
+    xhttpRequest.open("GET", bitbucketApi, true);
+    xhttpRequest.responseType = "text";
     var response;
+
     xhttpRequest.onload = function () {
         if (xhttpRequest.readyState === xhttpRequest.DONE) {
             if (xhttpRequest.status === 200) {
@@ -59,58 +58,61 @@ function getRepositories(username, callback){
     xhttpRequest.send(null);
 }
 
+/** Returns data in json format.
+ * @param {string} data.
+ * @returns {json} jsonData.
+ */
 function returnData(data){
-    var JsonData = JSON.parse(data);
-    return JsonData;
+    var jsonData = JSON.parse(data);
+    return jsonData;
 }
 
-function formatDate(date){
-    var newDate = moment(date).format('DD.MM.YYYY.');
+/** Returns date in DD.MM.YYYY. format.
+ * @param {date} inputDate. 
+ * @returns {date} newDate - Properly formated date.
+ */
+function formatDate(inputDate){
+    var newDate = moment(inputDate).format("DD.MM.YYYY.");
     return newDate;
 }
 
-// User username
-var username = 'vidovicmiroslav';
+/** Returns the user avatar url.
+ * @param {string} username
+ * @returns {string} avatar - The url of the user avatar.
+ */ 
+function getAvatar(username) {
+    var avatar = "https://bitbucket.org/account/"+username+"/avatar/128/";
+    return avatar;
+}
 
-// User avatar
-var avatar = 'https://bitbucket.org/account/'+username+'/avatar/128/';
+/** Loads the user and repositories data into Mustache templates and renders
+ * the templates. 
+ * @param {string} username - The user name of the Bitbucket user.
+ */
+function loadData(username) {
 
-// Repositories data
-var repositories = getRepositories(username, function(response) {
-    // handleData(response);
-});
-
-// User details
-// var user = getUser(username, function(response){
-//     var created_on = response.created_on;
-//     console.log(response);
-// });
-
-function loadData() {
+    var username = username;
 
     // load user data
-    $("#targetUser").load("template.html #user", function() {
+    $("#targetUser").load("templates/userTemplate.html #user", function() {
         var template = $("#user").html();
 
         getUser(username, function(response){
             var data = {
-             username : username,
-             avatar : avatar,
-             created_on : formatDate(response.created_on),
-             display_name : response.display_name,
-             link : response.links.html.href,
+                username : username,
+                avatar : getAvatar(username),
+                created_on : formatDate(response.created_on),
+                display_name : response.display_name,
+                link : response.links.html.href,
             };
-
-            // console.log(response);
             var rendered = Mustache.render(template, data);
-            $('#targetUser').html(rendered);
-
+            $("#targetUser").html(rendered);
         });
 
     });
 
     //load repository data
-    $("#targetRepositories").load("repositoryTemplate.html #repositories", function() {
+    $("#targetRepositories").load("templates/repositoryTemplate.html #repositories", function() {
         var template = $("#repositories").html();
 
         getRepositories(username, function(response) {
@@ -123,12 +125,10 @@ function loadData() {
                     return formatDate(this.updated_on);
                 }
             };
-            console.log(response.values[0]);
 
             var rendered = Mustache.render(template, data);
-            $('#targetRepositories').html(rendered);
-
+            $("#targetRepositories").html(rendered);
         });
-
     });
+
 }
