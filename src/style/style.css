@@ -97,22 +97,22 @@ p {
 	float: left;
 }
 
-#contactDetails {
+#accountDetails {
 	float: right;
 }
 
-#contactDetails ul {
+#accountDetails ul {
 	list-style-type: none;
 	font-size: 0.9em;
 	margin-top: 2px;
 }
 
-#contactDetails ul li {
+#accountDetails ul li {
 	margin-bottom: 3px;
 	color: #444;
 }
 
-#contactDetails ul li a, a[href^=tel] {
+#accountDetails ul li a, a[href^=tel] {
 	color: #444; 
 	text-decoration: none;
 	-webkit-transition: all .3s ease-in;
@@ -122,10 +122,9 @@ p {
 	transition: all .3s ease-in;
 }
 
-#contactDetails ul li a:hover { 
+#accountDetails ul li a:hover { 
 	color: #cf8a05;
 }
-
 
 section {
   border-top: 2px solid #205081;
@@ -206,7 +205,7 @@ section:last-child {
 		display: none;
 	}
 	
-	#name, #contactDetails {
+	#name, #accountDetails {
 		float: none;
 		width: 100%;
 		text-align: center;
