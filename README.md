@@ -9,7 +9,9 @@ Because cross origin requests are only supported for the following protocol sche
 ### Run a local server
 
 *Python*
+
     python3 -m http.server
 
 *PHP*
+
     php -S localhost:8000
